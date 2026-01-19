@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Image Downloader</title>
+<title>Parallel Processing Promises</title>
 
 <style>
   body {
@@ -11,9 +11,9 @@
   }
 
   #loading {
-    font-size: 18px;
     font-weight: bold;
     color: blue;
+    display: none;
   }
 
   #error {
@@ -23,16 +23,17 @@
   }
 
   #output img {
-    width: 180px;
+    width: 200px;
     margin: 10px;
     border: 1px solid #ccc;
-    border-radius: 6px;
   }
 </style>
 </head>
 <body>
 
-<h2>Promise.all Image Downloader</h2>
+<h2>Download Images using Promise.all()</h2>
+
+<button id="download-images-button">Download Images</button>
 
 <div id="loading">Loading...</div>
 <div id="error"></div>
@@ -40,9 +41,9 @@
 
 <script>
 const imageUrls = [
-  "https://picsum.photos/200/200?random=1",
-  "https://picsum.photos/200/200?random=2",
-  "https://picsum.photos/200/200?random=3"
+  "https://picsum.photos/id/237/200/300",
+  "https://picsum.photos/id/238/200/300",
+  "https://picsum.photos/id/239/200/300"
 ];
 
 function downloadImage(url) {
@@ -50,7 +51,7 @@ function downloadImage(url) {
     const img = new Image();
 
     img.onload = () => resolve(img);
-    img.onerror = () => reject("Error downloading image: " + url);
+    img.onerror = () => reject("Failed to download image: " + url);
 
     img.src = url;
   });
@@ -78,7 +79,9 @@ function downloadImages() {
     });
 }
 
-downloadImages();
+document
+  .getElementById("download-images-button")
+  .addEventListener("click", downloadImages);
 </script>
 
 </body>
